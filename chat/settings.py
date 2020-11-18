@@ -13,6 +13,8 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 from pathlib import Path
 import os
 import environ
+import dj_database_url
+
 env = environ.Env()
 environ.Env.read_env()
 
@@ -29,7 +31,7 @@ SECRET_KEY = 'h-0cdwt3w=xuc_*2o0#b&0@v2=3boq!eeagv8e$^_*&@!r#_=@'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -84,6 +86,9 @@ DATABASES = {
     'default': env.db(),
 }
 
+db_from_env = dj_database_url.config(conn_max_age=500)
+DATABASES['default'].update(db_from_env)
+
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
@@ -130,3 +135,6 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 LOGIN_URL = "/auth/login/"
 LOGIN_REDIRECT_URL = "index" 
+
+
+STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
