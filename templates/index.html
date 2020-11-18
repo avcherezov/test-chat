@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}Chat{% endblock %}
+{% block header %}Chat room{% endblock %}
+{% block content %}
+
+<div>
+    <form class="input-group mb-3" action="{% url 'index' %}">
+    <input type="text" class="form-control" placeholder="username" aria-label="username" aria-describedby="button-addon2" name="search">
+    <div class="input-group-append">
+      <button class="btn btn-outline-secondary" type="submit">Найти пользователя</button>
+    </div>
+    </form>
+</div>
+  
+    {% for chat_user in chat_user %}
+
+        {% include "chat_item.html" %}
+
+    {% endfor %}
+
+
+
+
+{% endblock %} 

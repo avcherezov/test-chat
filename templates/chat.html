@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}Chat{% endblock %}
+{% block header %}Chat с пользователем {{ chat.username }}{% endblock %}
+{% block content %}
+
+    {% for message in messages %}
+    <h3>
+        {{ message.message }}
+    </h3>
+    <p>ник - {{ message.sender }}, {{ message.pub_date }}</p>
+
+    {% endfor %}
+
+    {% include 'message.html' %}
+
+{% endblock %} 
