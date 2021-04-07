@@ -8,7 +8,8 @@ from django.contrib.auth.decorators import login_required
 def index(request):
     search_query = request.GET.get('search', '')
     if search_query:
-        chat_user = User.objects.filter(username__exact=search_query).exclude(username=request.user)
+        chat_user = User.objects.filter(
+            username__exact=search_query).exclude(username=request.user)
         if not chat_user:
             return render(request, 'no_user.html')
     else:
@@ -19,7 +20,9 @@ def index(request):
 @login_required
 def chat(request, username):
     chat = User.objects.get(username=username)
-    messages = Message.objects.filter(Q(recipient__username=username, sender__username=request.user) | Q(recipient__username=request.user, sender__username=username))
+    messages = Message.objects.filter(Q(
+        recipient__username=username, sender__username=request.user) | Q(
+            recipient__username=request.user, sender__username=username))
     if request.method == 'POST':
         form = MessageForm(request.POST)
         if form.is_valid():
@@ -30,7 +33,11 @@ def chat(request, username):
             return redirect('chat', username)
     else:
         form = MessageForm()
-    return render(request, 'chat.html', {'messages': messages, 'chat': chat, 'form': form})
+    return render(
+        request,
+        'chat.html',
+        {'messages': messages, 'chat': chat, 'form': form}
+    )
 
 
 @login_required
